@@ -6,11 +6,11 @@
 #    By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/14 21:01:58 by yoshin            #+#    #+#              #
-#    Updated: 2025/12/14 21:01:58 by yoshin           ###   ########.fr        #
+#    Updated: 2025/12/17 20:43:07 by yoshin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fragtrap
+NAME = diamondtrap
 SRCS = main.cpp ClapTrap.cpp ScavTrap.cpp FragTrap.cpp DiamondTrap.cpp
 HEADERS = ClapTrap.hpp ScavTrap.hpp FragTrap.hpp DiamondTrap.hpp
 CXX = c++
