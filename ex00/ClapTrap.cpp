@@ -6,7 +6,7 @@
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 12:13:24 by yoshin            #+#    #+#             */
-/*   Updated: 2025/12/15 12:02:24 by yoshin           ###   ########.fr       */
+/*   Updated: 2026/01/13 19:07:55 by yoshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "ClapTrap.hpp"
@@ -49,6 +49,20 @@ ClapTrap::ClapTrap(const std::string &name)
 }
 
 /*
+ * ClapTrap::ClapTrap - 복사 생성자
+ * @other: 복사할 ClapTrap 객체
+ *
+ * 다른 ClapTrap의 모든 속성을 복사하여 새 ClapTrap을 생성합니다.
+ */
+ClapTrap::ClapTrap(const ClapTrap &other)
+  : _name(other._name)
+  , _hitPoints(other._hitPoints)
+  , _energyPoints(other._energyPoints)
+  , _attackDamage(other._attackDamage) {
+  std::cout << "ClapTrap copy constructor called" << std::endl;
+}
+
+/*
  * ClapTrap::ClapTrap - 확장 생성자 (파생 클래스용)
  * @name: ClapTrap의 이름
  * @hitPoints: 초기 체력
@@ -71,17 +85,12 @@ ClapTrap::ClapTrap(const std::string &name,
 }
 
 /*
- * ClapTrap::ClapTrap - 복사 생성자
- * @other: 복사할 ClapTrap 객체
+ * ClapTrap::~ClapTrap - 소멸자
  *
- * 다른 ClapTrap의 모든 속성을 복사하여 새 ClapTrap을 생성합니다.
+ * ClapTrap을 파괴하고 메시지를 출력합니다.
  */
-ClapTrap::ClapTrap(const ClapTrap &other)
-  : _name(other._name)
-  , _hitPoints(other._hitPoints)
-  , _energyPoints(other._energyPoints)
-  , _attackDamage(other._attackDamage) {
-  std::cout << "ClapTrap copy constructor called" << std::endl;
+ClapTrap::~ClapTrap() {
+  std::cout << "ClapTrap " << _name << " destructor called" << std::endl;
 }
 
 /*
@@ -103,15 +112,6 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &other) {
   return *this;
 }
 
-/*
- * ClapTrap::~ClapTrap - 소멸자
- *
- * ClapTrap을 파괴하고 메시지를 출력합니다.
- */
-ClapTrap::~ClapTrap() {
-  std::cout << "ClapTrap " << _name << " destructor called" << std::endl;
-}
-
 /* ************************************************************************** */
 /*                                  행동 (ACTIONS)                            */
 /* ************************************************************************** */
@@ -125,31 +125,16 @@ ClapTrap::~ClapTrap() {
  * 체력이 0이거나 에너지가 없으면 공격할 수 없습니다.
  */
 void ClapTrap::attack(const std::string &target) {
-  if (!_canPerform(ATTACK))
+  if (!_canPerform(ATTACK)) {
+    _printCannotAct(ATTACK);
     return;
+  }
+
   --_energyPoints;
 
-  std::cout << "ClapTrap " << _name << " attacks " << target << ", causing "
-            << _attackDamage << " points of damage!" << std::endl;
-}
-
-/*
- * ClapTrap::beRepaired - 체력 회복
- * @amount: 회복할 체력 양
- *
- * ClapTrap이 스스로를 수리하여 체력을 회복합니다.
- * 1 에너지 포인트를 소모합니다.
- * 체력이 0이거나 에너지가 없으면 수리할 수 없습니다.
- */
-void ClapTrap::beRepaired(unsigned int amount) {
-  if (!_canPerform(REPAIR))
-    return;
-  --_energyPoints;
-  _hitPoints += amount;
-
-  std::cout << "ClapTrap " << _name << " is repaired for " << amount
-            << " points!" << std::endl
-            << "Hit points: " << _hitPoints << std::endl;
+  std::cout << _classTag() << " " << _name << " attacks " << target
+            << ", causing " << _attackDamage << " points of damage!"
+            << std::endl;
 }
 
 /*
@@ -161,13 +146,37 @@ void ClapTrap::beRepaired(unsigned int amount) {
  * 이미 죽은 경우(체력 0) 추가 데미지를 받을 수 없습니다.
  */
 void ClapTrap::takeDamage(unsigned int amount) {
-  if (!_canPerform(TAKE_DAMAGE))
+  if (!_canPerform(TAKE_DAMAGE)) {
+    _printCannotAct(TAKE_DAMAGE);
     return;
+  }
 
   _hitPoints = (amount >= _hitPoints) ? 0 : _hitPoints - amount;
 
-  std::cout << "ClapTrap " << _name << " takes " << amount
+  std::cout << _classTag() << " " << _name << " takes " << amount
             << " points of damage!" << std::endl
+            << "Hit points: " << _hitPoints << std::endl;
+}
+
+/*
+ * ClapTrap::beRepaired - 체력 회복
+ * @amount: 회복할 체력 양
+ *
+ * ClapTrap이 스스로를 수리하여 체력을 회복합니다.
+ * 1 에너지 포인트를 소모합니다.
+ * 체력이 0이거나 에너지가 없으면 수리할 수 없습니다.
+ */
+void ClapTrap::beRepaired(unsigned int amount) {
+  if (!_canPerform(REPAIR)) {
+    _printCannotAct(REPAIR);
+    return;
+  }
+
+  --_energyPoints;
+  _hitPoints += amount;
+
+  std::cout << _classTag() << " " << _name << " is repaired for " << amount
+            << " points!" << std::endl
             << "Hit points: " << _hitPoints << std::endl;
 }
 
@@ -183,39 +192,31 @@ void ClapTrap::takeDamage(unsigned int amount) {
  *
  * Return: 행동을 나타내는 문자열
  */
-std::string ClapTrap::_getActionStr(Action action) const {
+const std::string ClapTrap::_getActionStr(Action action) {
   switch (action) {
   case ATTACK:
     return ("attack");
   case REPAIR:
     return ("be repaired");
-    break;
   case TAKE_DAMAGE:
     return ("take damage");
   }
   throw std::runtime_error("Invalid args");
 }
 
-/*
- * ClapTrap::_printCannotAct - 행동 불가 메시지 출력
- * @action: 수행할 수 없는 행동
+/**
+ * @brief 클래스 식별 문자열을 반환합니다.
  *
- * ClapTrap이 행동을 수행할 수 없는 이유를 출력합니다.
- * (죽었거나 에너지가 없음)
+ * 현재 객체의 클래스 이름을 나타내는 문자열을 반환합니다.
+ * 주로 공통 로직에서 클래스별 메시지를 출력하기 위해 사용됩니다.
+ *
+ * 파생 클래스에서는 이 함수를 오버라이드하여
+ * 각 클래스에 맞는 식별 문자열을 제공할 수 있습니다.
+ *
+ * @return
+ * 클래스 이름을 나타내는 문자열 리터럴
  */
-void ClapTrap::_printCannotAct(Action action) const {
-  try {
-    if (_hitPoints == 0) {
-      std::cout << "ClapTrap " << _name << " cannot " << _getActionStr(action)
-                << " (It is dead)" << std::endl;
-      return;
-    }
-    std::cout << "ClapTrap " << _name << " cannot " << _getActionStr(action)
-              << " (No energy points left)" << std::endl;
-  } catch (std::runtime_error e) {
-    std::cout << e.what() << std::endl;
-  }
-}
+const std::string ClapTrap::_classTag(void) const { return ("ClapTrap"); }
 
 /*
  * ClapTrap::_canPerform - 행동 수행 가능 여부 확인
@@ -228,10 +229,31 @@ void ClapTrap::_printCannotAct(Action action) const {
  *
  * Return: 행동 가능하면 true, 아니면 false
  */
-bool ClapTrap::_canPerform(Action action) const {
-  if (_hitPoints == 0 || ((action != TAKE_DAMAGE) && _energyPoints == 0)) {
-    _printCannotAct(action);
-    return false;
+bool              ClapTrap::_canPerform(Action action) const {
+  const bool noHp = (_hitPoints == 0);
+  const bool noEp = ((action != TAKE_DAMAGE) && _energyPoints == 0);
+
+  return !(noHp || noEp);
+}
+
+/*
+ * ClapTrap::_printCannotAct - 행동 불가 메시지 출력
+ * @action: 수행할 수 없는 행동
+ *
+ * ClapTrap이 행동을 수행할 수 없는 이유를 출력합니다.
+ * (죽었거나 에너지가 없음)
+ */
+void ClapTrap::_printCannotAct(Action action) const {
+  try {
+    if (_hitPoints == 0) {
+      std::cout << _classTag() << " " << _name << " cannot "
+                << _getActionStr(action) << " (It is dead)" << std::endl;
+      return;
+    }
+    std::cout << _classTag() << " " << _name << " cannot "
+              << _getActionStr(action) << " (No energy points left)"
+              << std::endl;
+  } catch (std::runtime_error e) {
+    std::cout << e.what() << std::endl;
   }
-  return true;
 }
