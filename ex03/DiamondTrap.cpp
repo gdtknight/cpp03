@@ -104,3 +104,9 @@ void DiamondTrap::whoAmI(void) {
   std::cout << "DiamondTrap name: " << _name << std::endl;
   std::cout << "ClapTrap name: " << ClapTrap::_name << std::endl;
 }
+
+/* ************************************************************************** */
+/*                          헬퍼 함수 (PROTECTED HELPERS)                     */
+/* ************************************************************************** */
+
+const std::string DiamondTrap::_classTag() const { return "DiamondTrap"; }

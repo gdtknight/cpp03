@@ -6,7 +6,7 @@
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:57:06 by yoshin            #+#    #+#             */
-/*   Updated: 2025/12/12 13:57:06 by yoshin           ###   ########.fr       */
+/*   Updated: 2026/01/13 19:09:30 by yoshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,6 @@
  * - 에너지: 50 (기본 10에서 증가)
  * - 공격 데미지: 20 (기본 0에서 증가)
  *
- * virtual 상속:
- * - DiamondTrap에서 다이아몬드 상속 문제를 해결하기 위해 virtual 상속 사용
- *
  * 특수 능력:
  * - guardGate(): Gate keeper 모드 활성화
  * - attack(): ClapTrap의 attack을 오버라이드
@@ -33,21 +30,20 @@
 class ScavTrap : virtual public ClapTrap {
   public:
   /* 생성자 & 소멸자 */
-  ScavTrap(void);  /* 기본 생성자 */
-  ScavTrap(const std::string &name);  /* 이름 생성자 */
-  ScavTrap(const ScavTrap &other);  /* 복사 생성자 */
-  
+  ScavTrap(void);                    /* 기본 생성자 */
+  ScavTrap(const std::string &name); /* 이름 생성자 */
+  ScavTrap(const ScavTrap &other);   /* 복사 생성자 */
+
   /* 대입 연산자 */
   ScavTrap &operator=(const ScavTrap &other);
-  
+
   /* 소멸자 */
   ~ScavTrap(void);
 
-  /* 오버라이드된 attack 메서드 */
-  void attack(const std::string &target);
-  
   /* ScavTrap 전용 특수 능력 */
   void guardGate(void);
-};
 
+  protected:
+  virtual const std::string _classTag(void) const;
+};
 #endif

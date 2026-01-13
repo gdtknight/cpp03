@@ -6,7 +6,7 @@
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:57:06 by yoshin            #+#    #+#             */
-/*   Updated: 2025/12/12 13:57:06 by yoshin           ###   ########.fr       */
+/*   Updated: 2026/01/13 19:09:30 by yoshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,21 +30,20 @@
 class ScavTrap : public ClapTrap {
   public:
   /* 생성자 & 소멸자 */
-  ScavTrap(void);  /* 기본 생성자 */
-  ScavTrap(const std::string &name);  /* 이름 생성자 */
-  ScavTrap(const ScavTrap &other);  /* 복사 생성자 */
-  
+  ScavTrap(void);                    /* 기본 생성자 */
+  ScavTrap(const std::string &name); /* 이름 생성자 */
+  ScavTrap(const ScavTrap &other);   /* 복사 생성자 */
+
   /* 대입 연산자 */
   ScavTrap &operator=(const ScavTrap &other);
-  
+
   /* 소멸자 */
   ~ScavTrap(void);
 
-  /* 오버라이드된 attack 메서드 */
-  void attack(const std::string &target);
-  
   /* ScavTrap 전용 특수 능력 */
   void guardGate(void);
-};
 
+  protected:
+  virtual const std::string _classTag(void) const;
+};
 #endif

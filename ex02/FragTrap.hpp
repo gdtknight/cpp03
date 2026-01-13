@@ -17,18 +17,21 @@
 class FragTrap : public ClapTrap {
   public:
   /* 생성자 & 소멸자 */
-  FragTrap(void);  /* 기본 생성자 */
-  FragTrap(const std::string &name);  /* 이름 생성자 */
-  FragTrap(const FragTrap &other);  /* 복사 생성자 */
-  
+  FragTrap(void);                    /* 기본 생성자 */
+  FragTrap(const std::string &name); /* 이름 생성자 */
+  FragTrap(const FragTrap &other);   /* 복사 생성자 */
+
   /* 대입 연산자 */
   FragTrap &operator=(const FragTrap &other);
-  
+
   /* 소멸자 */
   ~FragTrap(void);
 
   /* FragTrap 전용 특수 능력 */
   void highFivesGuys(void) const;
+
+  protected:
+  virtual const std::string _classTag(void) const;
 };
 
 #endif

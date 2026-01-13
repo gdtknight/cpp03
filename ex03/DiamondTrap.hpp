@@ -36,21 +36,24 @@
 class DiamondTrap : public ScavTrap, public FragTrap {
   public:
   /* 생성자 & 소멸자 */
-  DiamondTrap(void);  /* 기본 생성자 */
-  DiamondTrap(std::string name);  /* 이름 생성자 */
-  DiamondTrap(const DiamondTrap &other);  /* 복사 생성자 */
-  
+  DiamondTrap(void);                     /* 기본 생성자 */
+  DiamondTrap(std::string name);         /* 이름 생성자 */
+  DiamondTrap(const DiamondTrap &other); /* 복사 생성자 */
+
   /* 대입 연산자 */
   DiamondTrap &operator=(const DiamondTrap &other);
-  
+
   /* 소멸자 */
   ~DiamondTrap(void);
 
   /* ScavTrap의 attack 메서드 사용 (명시적 지정) */
   using ScavTrap::attack;
-  
+
   /* DiamondTrap 전용 특수 능력 */
   void whoAmI(void);
+
+  protected:
+  virtual const std::string _classTag(void) const;
 
   private:
   /* DiamondTrap 자신의 이름 (ClapTrap::_name과 별도) */

@@ -97,3 +97,9 @@ FragTrap::~FragTrap(void) {
 void FragTrap::highFivesGuys() const {
   std::cout << "FragTrap " << _name << " requests a high five! ✋" << std::endl;
 }
+
+/* ************************************************************************** */
+/*                          헬퍼 함수 (PROTECTED HELPERS)                     */
+/* ************************************************************************** */
+
+const std::string FragTrap::_classTag() const { return "FragTrap"; }

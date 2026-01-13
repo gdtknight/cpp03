@@ -6,7 +6,7 @@
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/12 13:57:08 by yoshin            #+#    #+#             */
-/*   Updated: 2025/12/12 13:57:08 by yoshin           ###   ########.fr       */
+/*   Updated: 2026/01/13 19:10:30 by yoshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,35 +89,18 @@ ScavTrap::~ScavTrap(void) {
 /* ************************************************************************** */
 
 /*
- * ScavTrap::attack - 대상 공격 (오버라이드)
- * @target: 공격할 대상의 이름
- *
- * ClapTrap의 attack을 오버라이드합니다.
- * ScavTrap은 더 강력한 공격 메시지를 표시합니다.
- * 1 에너지 포인트를 소모합니다.
- */
-void ScavTrap::attack(const std::string &target) {
-  if (_energyPoints == 0) {
-    std::cout << "ScavTrap " << _name << " has no energy points left!"
-              << std::endl;
-    return;
-  }
-  if (_hitPoints == 0) {
-    std::cout << "ScavTrap " << _name << " is dead!" << std::endl;
-    return;
-  }
-  _energyPoints--;
-  std::cout << "ScavTrap " << _name << " attacks " << target << ", causing "
-            << _attackDamage << " points of damage!" << std::endl;
-}
-
-/*
  * ScavTrap::guardGate - Gate keeper 모드 활성화
  *
  * ScavTrap이 Gate keeper 모드로 전환됩니다.
  * 이것은 ScavTrap 전용 특수 능력입니다.
  */
 void ScavTrap::guardGate(void) {
-  std::cout << "ScavTrap " << _name << " is now in Gate keeper mode"
+  std::cout << _classTag() << " " << _name << " is now in Gate keeper mode"
             << std::endl;
 }
+
+/* ************************************************************************** */
+/*                          헬퍼 함수 (PROTECTED HELPERS)                     */
+/* ************************************************************************** */
+
+const std::string ScavTrap::_classTag() const { return "ScavTrap"; }
