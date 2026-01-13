@@ -44,6 +44,7 @@ class ScavTrap : virtual public ClapTrap {
   void guardGate(void);
 
   protected:
-  virtual const std::string _classTag(void) const;
+  virtual const char *_classTag(void) const;
 };
+
 #endif

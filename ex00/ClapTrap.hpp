@@ -37,13 +37,7 @@ class ClapTrap {
   ClapTrap(const std::string &name); /* 이름 생성자 */
   ClapTrap(const ClapTrap &other);   /* 복사 생성자 */
 
-  /* 파생 클래스를 위한 protected 생성자 */
-  ClapTrap(const std::string &name,
-           unsigned int       hitPoints,
-           unsigned int       energyPoints,
-           unsigned int       attackDamage);
-
-  ~ClapTrap(void); /* 소멸자 */
+  ~ClapTrap(void);                   /* 소멸자 */
 
   /* 복사 대입 연산자 */
   ClapTrap &operator=(const ClapTrap &other);
@@ -53,19 +47,26 @@ class ClapTrap {
   void      takeDamage(unsigned int amount);   /* 데미지 받기 */
   void      beRepaired(unsigned int amount);   /* 체력 회복 */
 
-  private:
-  std::string  _name;                          /* 로봇의 이름 */
-  unsigned int _hitPoints;                     /* 현재 체력 (0 = 파괴됨) */
-  unsigned int _energyPoints;                  /* 행동을 위한 에너지 */
-  unsigned int _attackDamage;                  /* 공격당 데미지 */
+  protected:
+  /* 파생 클래스를 위한 protected 생성자 */
+  ClapTrap(const std::string &name,
+           unsigned int       hitPoints,
+           unsigned int       energyPoints,
+           unsigned int       attackDamage);
 
+  private:
   enum Action { ATTACK, REPAIR, TAKE_DAMAGE };
 
-  static const std::string _getActionStr(Action action);
-  const std::string        _classTag(void) const;
+  static const char *_getActionStr(Action action);
+  const char        *_classTag(void) const;
 
-  bool                     _canPerform(Action action) const;
-  void                     _printCannotAct(Action action) const;
+  bool               _canPerform(Action action) const;
+  void               _printCannotAct(Action action) const;
+
+  std::string        _name;         /* 로봇의 이름 */
+  unsigned int       _hitPoints;    /* 현재 체력 (0 = 파괴됨) */
+  unsigned int       _energyPoints; /* 행동을 위한 에너지 */
+  unsigned int       _attackDamage; /* 공격당 데미지 */
 };
 
 #endif
