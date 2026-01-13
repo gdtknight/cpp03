@@ -29,8 +29,8 @@
 FragTrap::FragTrap(void)
   : ClapTrap("default",
              100,
-             50,
-             20) {
+             100,
+             30) {
   std::cout << "FragTrap default constructor called" << std::endl;
 }
 
@@ -43,8 +43,8 @@ FragTrap::FragTrap(void)
 FragTrap::FragTrap(const std::string &name)
   : ClapTrap(name,
              100,
-             50,
-             20) {
+             100,
+             30) {
   std::cout << "FragTrap " << _name << " constructor called" << std::endl;
 }
 
@@ -95,7 +95,8 @@ FragTrap::~FragTrap(void) {
  * 이것은 FragTrap 전용 특수 능력입니다.
  */
 void FragTrap::highFivesGuys() const {
-  std::cout << "FragTrap " << _name << " requests a high five! ✋" << std::endl;
+  std::cout << _classTag() << " " << _name << " requests a high five! ✋"
+            << std::endl;
 }
 
 /* ************************************************************************** */
