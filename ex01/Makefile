@@ -6,11 +6,11 @@
 #    By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/12/14 21:01:58 by yoshin            #+#    #+#              #
-#    Updated: 2025/12/14 21:01:58 by yoshin           ###   ########.fr        #
+#    Updated: 2026/01/13 16:14:08 by yoshin           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = claptrap
+NAME = scavtrap
 SRCS = main.cpp ClapTrap.cpp ScavTrap.cpp
 HEADERS = ClapTrap.hpp ScavTrap.hpp
 CXX = c++

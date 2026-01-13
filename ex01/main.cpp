@@ -13,7 +13,7 @@
 #include "ScavTrap.hpp"
 #include <iostream>
 
-static void printSeparator(const std::string& title) {
+static void printSeparator(const std::string &title) {
   std::cout << "\n========== " << title << " ==========\n" << std::endl;
 }
 
