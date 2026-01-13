@@ -31,7 +31,7 @@ class FragTrap : virtual public ClapTrap {
   void highFivesGuys(void) const;
 
   protected:
-  virtual const std::string _classTag(void) const;
+  virtual const char *_classTag(void) const;
 };
 
 #endif

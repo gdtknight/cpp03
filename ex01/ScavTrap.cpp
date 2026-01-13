@@ -103,4 +103,4 @@ void ScavTrap::guardGate(void) {
 /*                          헬퍼 함수 (PROTECTED HELPERS)                     */
 /* ************************************************************************** */
 
-const std::string ScavTrap::_classTag() const { return "ScavTrap"; }
+const char *ScavTrap::_classTag() const { return "ScavTrap"; }

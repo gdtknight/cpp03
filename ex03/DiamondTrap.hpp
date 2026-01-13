@@ -53,7 +53,7 @@ class DiamondTrap : public ScavTrap, public FragTrap {
   void whoAmI(void);
 
   protected:
-  virtual const std::string _classTag(void) const;
+  virtual const char *_classTag(void) const;
 
   private:
   /* DiamondTrap 자신의 이름 (ClapTrap::_name과 별도) */

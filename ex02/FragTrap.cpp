@@ -103,4 +103,4 @@ void FragTrap::highFivesGuys() const {
 /*                          헬퍼 함수 (PROTECTED HELPERS)                     */
 /* ************************************************************************** */
 
-const std::string FragTrap::_classTag() const { return "FragTrap"; }
+const char *FragTrap::_classTag() const { return "FragTrap"; }
