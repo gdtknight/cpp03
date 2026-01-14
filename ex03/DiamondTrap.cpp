@@ -6,11 +6,13 @@
 /*   By: yoshin <yoshin@student.42gyeongsan.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/14 19:38:18 by yoshin            #+#    #+#             */
-/*   Updated: 2025/12/14 19:38:18 by yoshin           ###   ########.fr       */
+/*   Updated: 2026/01/13 21:07:53 by yoshin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "DiamondTrap.hpp"
+#include "FragTrap.hpp"
+#include "ScavTrap.hpp"
 #include <iostream>
 
 /*
@@ -24,13 +26,13 @@
  * - 공격 데미지: FragTrap에서 상속 (30)
  */
 DiamondTrap::DiamondTrap(void)
-  : ClapTrap("default_clap_name")
+  : ClapTrap("default_clap_name",
+             100,
+             50,
+             30)
   , ScavTrap()
   , FragTrap()
   , _name("default") {
-  _hitPoints    = FragTrap::_hitPoints;
-  _energyPoints = ScavTrap::_energyPoints;
-  _attackDamage = FragTrap::_attackDamage;
   std::cout << "DiamondTrap default constructor called" << std::endl;
 }
 
@@ -42,14 +44,14 @@ DiamondTrap::DiamondTrap(void)
  * ClapTrap 이름은 "<name>_clap_name"으로 설정됩니다.
  * 스탯은 FragTrap과 ScavTrap에서 조합됩니다.
  */
-DiamondTrap::DiamondTrap(std::string name)
-  : ClapTrap(name + "_clap_name")
+DiamondTrap::DiamondTrap(const std::string &name)
+  : ClapTrap(name + "_clap_name",
+             100,
+             50,
+             30)
   , ScavTrap(name)
   , FragTrap(name)
   , _name(name) {
-  _hitPoints    = FragTrap::_hitPoints;
-  _energyPoints = ScavTrap::_energyPoints;
-  _attackDamage = FragTrap::_attackDamage;
   std::cout << "DiamondTrap " << _name << " constructor called" << std::endl;
 }
 
@@ -62,9 +64,9 @@ DiamondTrap::DiamondTrap(std::string name)
 DiamondTrap::DiamondTrap(const DiamondTrap &other)
   : ClapTrap(other)
   , ScavTrap(other)
-  , FragTrap(other) {
+  , FragTrap(other)
+  , _name(other._name) {
   std::cout << "DiamondTrap copy constructor called" << std::endl;
-  *this = other;
 }
 
 /*
@@ -79,7 +81,7 @@ DiamondTrap &DiamondTrap::operator=(const DiamondTrap &other) {
   std::cout << "DiamondTrap copy assignment operator called" << std::endl;
   if (this != &other) {
     ClapTrap::operator=(other);
-    _name = other._name;
+	DiamondTrap::_name = other.DiamondTrap::_name;
   }
   return *this;
 }
@@ -100,7 +102,7 @@ DiamondTrap::~DiamondTrap(void) {
  * 이것은 DiamondTrap 전용 특수 능력입니다.
  * 다이아몬드 상속에서 두 개의 별도 이름을 유지하는 것을 보여줍니다.
  */
-void DiamondTrap::whoAmI(void) {
+void DiamondTrap::whoAmI(void) const {
   std::cout << "DiamondTrap name: " << _name << std::endl;
   std::cout << "ClapTrap name: " << ClapTrap::_name << std::endl;
 }
@@ -109,4 +111,4 @@ void DiamondTrap::whoAmI(void) {
 /*                          헬퍼 함수 (PROTECTED HELPERS)                     */
 /* ************************************************************************** */
 
-const std::string DiamondTrap::_classTag() const { return "DiamondTrap"; }
+const char *DiamondTrap::_classTag() const { return "DiamondTrap"; }
