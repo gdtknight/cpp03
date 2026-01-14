@@ -57,7 +57,6 @@ ScavTrap::ScavTrap(const std::string &name)
 ScavTrap::ScavTrap(const ScavTrap &other)
   : ClapTrap(other) {
   std::cout << "ScavTrap copy constructor called" << std::endl;
-  *this = other;
 }
 
 /*
@@ -87,6 +86,17 @@ ScavTrap::~ScavTrap(void) {
 /* ************************************************************************** */
 /*                                  행동 (ACTIONS)                            */
 /* ************************************************************************** */
+
+void ScavTrap::attack(const std::string &target) {
+  if (!_canPerform(ATTACK))
+    return;
+
+  --_energyPoints;
+
+  std::cout << "ScavTrap " << _name << " attacks " << target
+            << ", causing " << _attackDamage << " points of CRITICAL damage!"
+            << std::endl;
+}
 
 /*
  * ScavTrap::guardGate - Gate keeper 모드 활성화

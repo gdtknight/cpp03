@@ -24,8 +24,8 @@
  * - 공격 데미지: 20 (기본 0에서 증가)
  *
  * 특수 능력:
- * - guardGate(): Gate keeper 모드 활성화
  * - attack(): ClapTrap의 attack을 오버라이드
+ * - guardGate(): Gate keeper 모드 활성화
  */
 class ScavTrap : virtual public ClapTrap {
   public:
@@ -41,10 +41,10 @@ class ScavTrap : virtual public ClapTrap {
   ~ScavTrap(void);
 
   /* ScavTrap 전용 특수 능력 */
+  void attack(const std::string &target);
   void guardGate(void);
 
   protected:
   virtual const char *_classTag(void) const;
 };
-
 #endif

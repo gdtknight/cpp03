@@ -57,7 +57,6 @@ FragTrap::FragTrap(const std::string &name)
 FragTrap::FragTrap(const FragTrap &other)
   : ClapTrap(other) {
   std::cout << "FragTrap copy constructor called" << std::endl;
-  *this = other;
 }
 
 /*
@@ -95,7 +94,7 @@ FragTrap::~FragTrap(void) {
  * 이것은 FragTrap 전용 특수 능력입니다.
  */
 void FragTrap::highFivesGuys() const {
-  std::cout << _classTag() << " " << _name << " requests a high five! ✋"
+  std::cout << _classTag() << " " << _name << " requests a high five!"
             << std::endl;
 }
 
