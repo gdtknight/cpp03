@@ -100,9 +100,9 @@ ClapTrap &ClapTrap::operator=(const ClapTrap &other) {
  * 주로 파생 클래스(ScavTrap, FragTrap 등)에서 사용됩니다.
  */
 ClapTrap::ClapTrap(const std::string &name,
-                   unsigned int       hitPoints,
-                   unsigned int       energyPoints,
-                   unsigned int       attackDamage)
+                   unsigned int hitPoints,
+                   unsigned int energyPoints,
+                   unsigned int attackDamage)
   : _name(name)
   , _hitPoints(hitPoints)
   , _energyPoints(energyPoints)
@@ -129,7 +129,7 @@ void ClapTrap::attack(const std::string &target) {
 
   --_energyPoints;
 
-  std::cout << _classTag() << " " << _name << " attacks " << target
+  std::cout << "ClapTrap " << _name << " attacks " << target
             << ", causing " << _attackDamage << " points of damage!"
             << std::endl;
 }
@@ -171,6 +171,14 @@ void ClapTrap::beRepaired(unsigned int amount) {
   std::cout << _classTag() << " " << _name << " is repaired for " << amount
             << " points!" << std::endl
             << "Hit points: " << _hitPoints << std::endl;
+}
+
+void ClapTrap::status(void) {
+  std::cout << "class       : " << _classTag() << std::endl;
+  std::cout << "name        : " << _name << std::endl;
+  std::cout << "hitPoints   : " << _hitPoints << std::endl;
+  std::cout << "energyPoints: " << _energyPoints << std::endl;
+  std::cout << "attackDamage: " << _attackDamage << std::endl;
 }
 
 /* ************************************************************************** */
@@ -223,7 +231,7 @@ const char *ClapTrap::_classTag(void) const { return ("ClapTrap"); }
  *
  * Return: 행동 가능하면 true, 아니면 false
  */
-bool        ClapTrap::_canPerform(Action action) const {
+bool ClapTrap::_canPerform(Action action) const {
   const bool noHp = (_hitPoints == 0);
   const bool noEp = ((action != TAKE_DAMAGE) && _energyPoints == 0);
 
